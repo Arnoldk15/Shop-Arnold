@@ -205,6 +205,24 @@ footer{
         grid-template-columns:1fr;
     }
 }
+
+.music-player{
+    position:fixed;
+    right:16px;
+    bottom:16px;
+    z-index:9999;
+}
+.music-player button{
+    width:auto;
+    min-width:130px;
+    padding:11px 16px;
+    border:1px solid #ff2525;
+    border-radius:999px;
+    background:rgba(20,0,0,.92);
+    color:#fff;
+    box-shadow:0 0 15px rgba(255,0,0,.25);
+}
+
 </style>
 </head>
 
@@ -339,53 +357,18 @@ footer{
 </div>
 </div>
 
-<!-- ĐẶT ĐƠN -->
-<div class="order" id="order">
-<h2>🛒 Đặt đơn</h2>
+    </div>
 
-<label>Sản phẩm</label>
-<input id="sanpham" readonly placeholder="Hãy chọn sản phẩm">
 
-<label>Tên / ID</label>
-<input id="ten" placeholder="Nhập tên hoặc ID">
+    <!-- NHẠC NỀN -->
+    <div class="music-player">
+        <button id="musicBtn" type="button" onclick="toggleMusic()">🔇 BẬT NHẠC</button>
+        <audio id="bgMusic" loop preload="auto">
+            <source src="music.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 
-<label>Liên hệ</label>
-<input id="lienhe" placeholder="Zalo / Messenger">
-
-<div class="total">
-Tổng tiền: <span id="tong">0K</span>
-</div>
-
-<button onclick="datDon()">GỬI ĐƠN</button>
-
-<div class="status" id="trangthai">
-Trạng thái: Chưa có đơn
-</div>
-</div>
-
-<!-- ADMIN -->
-<div class="admin">
-<h2>🔐 Khu vực Admin</h2>
-
-<label>Tài khoản</label>
-<input id="adminUser" placeholder="Tài khoản Admin">
-
-<label>Mật khẩu</label>
-<input id="adminPass" type="password" placeholder="Mật khẩu Admin">
-
-<br><br>
-
-<button onclick="adminLogin()">ĐĂNG NHẬP ADMIN</button>
-
-<div class="note">
-Admin thật cần được xác thực bằng backend/database.
-Không nên lưu mật khẩu Admin trực tiếp trong index.html.
-</div>
-</div>
-
-</div>
-
-<footer>
+    <footer>
 © 2026 BẢNG GIÁ AIMLOCK • DEV ARNOLD
 </footer>
 
@@ -464,6 +447,23 @@ function adminLogin(){
         "Cần kết nối backend để xác thực tài khoản " +
         "và duyệt đơn thật."
     );
+}
+
+
+const bgMusic = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
+
+function toggleMusic(){
+    if(bgMusic.paused){
+        bgMusic.play().then(() => {
+            musicBtn.innerText = "🔊 TẮT NHẠC";
+        }).catch(() => {
+            alert("Không thể phát nhạc. Hãy kiểm tra file music.mp3 đã được tải lên cùng thư mục với index.html.");
+        });
+    }else{
+        bgMusic.pause();
+        musicBtn.innerText = "🔇 BẬT NHẠC";
+    }
 }
 
 </script>
